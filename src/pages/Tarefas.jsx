@@ -149,7 +149,42 @@ async function criarTarefa(){
                         <button type="submit"
                             className="w-full h-10 rounded bg-purple-400 hover:bg-purple-600 duration-200 hover:text-white font-bold">Criar</button>
                     </form>
+
+                    tarefas.length == 0 ? {}
                 </div>
+
+                tarefas.length == 0 ? (
+                    <div>Crie sua primeira tarefa.</div>
+                )
+
+        async function deletarTarefa(id){
+            event.preventDefault();
+        try{
+            const resposta = await AXIOS.delete(`/tarefas/${id}`);
+
+            alert(resposta.data.mensagem);
+            buscarTarefas();
+        } catch (error) {
+            alert("Error: ", error.mensage);
+        }
+
+        if(confirm("Deseja realmente apagar?")){
+        fetch(`https://js-lista-de-tarefas-api.onrender.com/tarefas/${id}`,{
+            method: "delete",
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+        .then(resposta => resposta.json())
+        .then(json => {
+            alert(json.mensagem);
+            buscarTarefas();
+        })
+    }
+}
+
+
+
             </main>
 
         </div>
